@@ -57,6 +57,7 @@
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="WrF-Vb-iDA">
                                 <rect key="frame" x="20" y="108" width="374" height="374"/>
                                 <color key="backgroundColor" systemColor="secondarySystemFillColor" red="0.47058823529999999" green="0.47058823529999999" blue="0.50196078430000002" alpha="0.16" colorSpace="custom" customColorSpace="sRGB"/>
+                                <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="WrF-Vb-iDA" secondAttribute="height" multiplier="1:1" id="rJd-rF-qNd"/>
                                 </constraints>
@@ -81,6 +82,7 @@
                             </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="6Bx-Z9-nAh" firstAttribute="centerX" secondItem="WrF-Vb-iDA" secondAttribute="centerX" id="34Y-fG-QBd"/>
                             <constraint firstItem="WrF-Vb-iDA" firstAttribute="leading" secondItem="2dA-ld-EPX" secondAttribute="leading" constant="20" id="6xE-vV-MpJ"/>
@@ -111,11 +113,43 @@
                         <outlet property="addButton" destination="Ew3-P5-tbP" id="Ck3-zm-Btj"/>
                         <outlet property="photoImageview" destination="WrF-Vb-iDA" id="T3r-WV-A7S"/>
                         <outlet property="titleTextField" destination="6Bx-Z9-nAh" id="h52-dV-YBc"/>
+                        <segue destination="bWh-mM-Gll" kind="show" identifier="showLargePicture" id="LI4-VU-cGM"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xcR-Ba-j9N" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="866.66666666666674" y="105.80357142857143"/>
+            <point key="canvasLocation" x="857" y="115"/>
+        </scene>
+        <!--Large Image View Controller-->
+        <scene sceneID="nmJ-fs-UeL">
+            <objects>
+                <viewController id="bWh-mM-Gll" customClass="LargeImageViewController" customModule="Progress_Journal" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="B9e-VF-5nq">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6y1-nc-BRR">
+                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                                <color key="backgroundColor" systemColor="secondarySystemFillColor" red="0.47058823529999999" green="0.47058823529999999" blue="0.50196078430000002" alpha="0.16" colorSpace="custom" customColorSpace="sRGB"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="6y1-nc-BRR" firstAttribute="top" secondItem="8cf-rP-r2d" secondAttribute="top" id="Nge-Gm-2Wb"/>
+                            <constraint firstItem="6y1-nc-BRR" firstAttribute="leading" secondItem="8cf-rP-r2d" secondAttribute="leading" id="yhP-c5-i3w"/>
+                            <constraint firstItem="8cf-rP-r2d" firstAttribute="bottom" secondItem="6y1-nc-BRR" secondAttribute="bottom" id="ymx-cU-nIk"/>
+                            <constraint firstItem="8cf-rP-r2d" firstAttribute="trailing" secondItem="6y1-nc-BRR" secondAttribute="trailing" id="ysB-7N-bPK"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="8cf-rP-r2d"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="7TF-iW-Uud"/>
+                    <connections>
+                        <outlet property="imageView" destination="6y1-nc-BRR" id="JDx-0d-XVl"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="YeD-wR-3nb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1571" y="106"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="FJm-lY-bVo">

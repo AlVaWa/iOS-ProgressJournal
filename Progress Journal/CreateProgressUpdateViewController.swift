@@ -8,11 +8,13 @@
 
 import UIKit
 
-class CreateProgressUpdateViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class CreateProgressUpdateViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
 
-    // Temp values to initialise if sendt from exsisting progress update item
-    var progressUpdateTitle: String? = nil
-    var progressUpdateImage: UIImage? = nil
+    // Temp value to initialise if sendt from exsisting progress update item
+    var progressUpdateItem: ProgressUpdate? = nil
+    
+    // Tap functionality
+    let tapRec = UITapGestureRecognizer()
     
     @IBOutlet weak var photoImageview: UIImageView!
     @IBOutlet weak var titleTextField: UITextField!
@@ -22,19 +24,40 @@ class CreateProgressUpdateViewController: UIViewController, UIImagePickerControl
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         addButton.layer.cornerRadius = addButton.frame.size.height / 2
+        
         pickerController.delegate = self
+        self.titleTextField.delegate = self
         
         // Initialising values if sendt from exsisting progress update item
-        if(progressUpdateTitle != nil && progressUpdateImage != nil){
-            photoImageview.image = progressUpdateImage
-            titleTextField.text = progressUpdateTitle
+        if let progressUpdateItem = progressUpdateItem {
+            photoImageview.image = UIImage(data: progressUpdateItem.image!)
+            titleTextField.text = progressUpdateItem.title
             addButton.isHidden = true
         }else{
             addButton.isHidden = false
         }
         
-
+        // TapRecognizer for image
+        tapRec.addTarget(self, action: #selector(self.tappedView))
+        photoImageview.addGestureRecognizer(tapRec)
+        photoImageview!.isUserInteractionEnabled = true
+        
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
+    }
+    
+    // Need to be @objc to be able reach it with: #selector(self.tappedView)
+    @objc func tappedView(){
+        if let progressUpdateItem = progressUpdateItem {
+            performSegue(withIdentifier: "showLargePicture", sender: progressUpdateItem)
+        }else {
+            showPhotoLibrary()
+        }
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
@@ -44,9 +67,15 @@ class CreateProgressUpdateViewController: UIViewController, UIImagePickerControl
         
         pickerController.dismiss(animated: true, completion: nil)
     }
-    @IBAction func exsistingPhotoTapped(_ sender: Any) {
+    
+    func showPhotoLibrary(){
         pickerController.sourceType = .photoLibrary
         present(pickerController, animated: true, completion: nil)
+    }
+    
+    
+    @IBAction func exsistingPhotoTapped(_ sender: Any) {
+        showPhotoLibrary()
     }
     
     @IBAction func cameraTapped(_ sender: Any) {
@@ -64,6 +93,14 @@ class CreateProgressUpdateViewController: UIViewController, UIImagePickerControl
         }
         
         navigationController?.popViewController(animated: true)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let largeImageVC = segue.destination as? LargeImageViewController {
+            let progressUpdateItem = sender as! ProgressUpdate
+            largeImageVC.progressUpdateItem = progressUpdateItem
+            
+        }
     }
     
     

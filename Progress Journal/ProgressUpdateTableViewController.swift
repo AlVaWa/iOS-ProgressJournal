@@ -40,7 +40,13 @@ class ProgressUpdateTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "progressUpdateCellId", for: indexPath)
-        cell.textLabel?.text = progressUpdateItems[indexPath.row].title
+        
+        let progressUpdateItem = progressUpdateItems[indexPath.row]
+        if let imageData = progressUpdateItem.image {
+            cell.imageView?.image = UIImage(data: imageData)
+        }
+        
+        cell.textLabel?.text = progressUpdateItem.title
         return cell
     }
     
@@ -68,9 +74,8 @@ class ProgressUpdateTableViewController: UITableViewController {
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
          if let createProgressUpdateVC = segue.destination as? CreateProgressUpdateViewController {
-            if let selectedProgressUpdate = sender as? ProgressUpdate {
-                createProgressUpdateVC.progressUpdateTitle = selectedProgressUpdate.title
-                createProgressUpdateVC.progressUpdateImage =  UIImage(data: selectedProgressUpdate.image!)
+            if let selectedProgressUpdateItem = sender as? ProgressUpdate {
+                createProgressUpdateVC.progressUpdateItem = selectedProgressUpdateItem
             }
             
             
